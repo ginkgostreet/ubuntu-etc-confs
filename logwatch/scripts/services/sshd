@@ -300,7 +300,7 @@ while (defined(my $ThisLine = <STDIN>)) {
        ($ThisLine =~ /User child is on pid \d/ ) or
        ($ThisLine =~ /Nasty PTR record .* is set up for [\da-fA-F.:]+, ignoring/) or
 # Added DO'B
-       ($ThisLine =~ /Disconnected from .* port .* \[.*\]/)
+       ($ThisLine =~ /Disconnected from .* port .*( \[.*\])?/)
    ) {
       # Ignore these
    } elsif ( my ($Method,$User,$Host,$Port,$Key) = ($ThisLine =~ /^Accepted (\S+) for ((?:invalid user )?\S+) from ([\d\.:a-f]+) port (\d+) ssh[12](?:: (\w+))?/) ) {
@@ -338,7 +338,10 @@ while (defined(my $ThisLine = <STDIN>)) {
       ($ThisLine =~ m/^fatal: Write failed: Connection reset by peer/) or
       ($ThisLine =~ m/^channel \d+: open failed: (?:connect failed: Channel open failed\.|administratively prohibited: open failed)/) or
       ($ThisLine =~ m/^session_input_channel_req: no session \d+ req window-change/) or
-      ($ThisLine =~ m/^error: chan_shutdown_read failed for .+/)
+      ($ThisLine =~ m/^error: chan_shutdown_read failed for .+/) or
+# Added by DO'B
+      ($ThisLine =~ m/^Connection reset by .+ port .+/) or
+
    ) {
       $NetworkErrors++;
    } elsif ( $ThisLine =~ m/^(log: )?Received (signal 15|SIG...); (terminating|restarting)\./) { #ssh/openssh
