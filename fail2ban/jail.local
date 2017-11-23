@@ -210,6 +210,9 @@ logpath  = %(apache_error_log)s
 maxretry = 2
 enabled  = true
 
+# Make sure python3 is default python on system
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=784802
+# sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 [apache-fakegooglebot]
 port     = http,https
 logpath  = %(apache_access_log)s
