@@ -1,0 +1,12 @@
+#
+# InnoDB
+#
+# These settings should be used as a starting point for tuning
+# the MySQL server of a Linode with 4Gb of memory. Run the
+# mysqltuner.pl script after the server has had some workload
+# and make adjustments as needed.
+innodb_fast_shutdown            = 0
+innodb_file_per_table           = 1
+innodb_buffer_pool_size         = 1024M
+innodb_buffer_pool_instances    = 1
+innodb_log_file_size            = 128M
