@@ -298,7 +298,9 @@ while (defined(my $ThisLine = <STDIN>)) {
        ($ThisLine =~ /Starting session: (forced-command|subsystem|shell|command)/ ) or
        ($ThisLine =~ /Found matching \w+ key:/ ) or
        ($ThisLine =~ /User child is on pid \d/ ) or
-       ($ThisLine =~ /Nasty PTR record .* is set up for [\da-fA-F.:]+, ignoring/)
+       ($ThisLine =~ /Nasty PTR record .* is set up for [\da-fA-F.:]+, ignoring/) or
+# Added DO'B
+       ($ThisLine =~ /Disconnected from .* port .*( \[.*\])?/)
    ) {
       # Ignore these
    } elsif ( my ($Method,$User,$Host,$Port,$Key) = ($ThisLine =~ /^Accepted (\S+) for ((?:invalid user )?\S+) from ([\d\.:a-f]+) port (\d+) ssh[12](?:: (\w+))?/) ) {
@@ -314,7 +316,11 @@ while (defined(my $ThisLine = <STDIN>)) {
       }
    } elsif ( my ($Method, undef,$User,$Host,$Port) = ($ThisLine =~ m/^Failed (\S+) for (illegal|invalid) user (.*) from ([^ ]+) port (\d+)/ ) ) { #openssh
       $IllegalUsers{$Host}{$User}++;
-   } elsif ( my ($User) = ( $ThisLine =~ /Disconnecting: Too many authentication failures for ([^ ]+)/)) {
+   } elsif ( my ($User) = ( 
+        ( $ThisLine =~ /Disconnecting: Too many authentication failures for ([^ ]+)/ ) or
+        ( $ThisLine =~ /error: maximum authentication attempts exceeded for ([^ ]+)/ ) )
+      )
+   {
       $TooManyFailures{$User}++;
    } elsif ( $ThisLine =~ m/^(fatal: )?Did not receive ident(ification)? string from (.+)/ ) { # ssh/openssh
       my $name = LookupIP($3);
@@ -332,7 +338,9 @@ while (defined(my $ThisLine = <STDIN>)) {
       ($ThisLine =~ m/^fatal: Write failed: Connection reset by peer/) or
       ($ThisLine =~ m/^channel \d+: open failed: (?:connect failed: Channel open failed\.|administratively prohibited: open failed)/) or
       ($ThisLine =~ m/^session_input_channel_req: no session \d+ req window-change/) or
-      ($ThisLine =~ m/^error: chan_shutdown_read failed for .+/)
+      ($ThisLine =~ m/^error: chan_shutdown_read failed for .+/) or
+# Added by DO'B
+      ($ThisLine =~ m/^Connection reset by .+ port .+/)
    ) {
       $NetworkErrors++;
    } elsif ( $ThisLine =~ m/^(log: )?Received (signal 15|SIG...); (terminating|restarting)\./) { #ssh/openssh
@@ -388,7 +396,7 @@ while (defined(my $ThisLine = <STDIN>)) {
       $RefusedConnections{$1}++;
    } elsif ( my ($Reason) = ($ThisLine =~ /^Authentication refused: (.*)$/ ) ) {
       $RefusedAuthentication{$Reason}++;
-   } elsif ( my ($Host,$Reason) = ($ThisLine =~ /^Received disconnect from ([^ ]*): (.*)$/)) {
+   } elsif ( my ($Host,$Reason) = ($ThisLine =~ /^Received disconnect from ([^ ]*) port .*:(.*): .*$/)) {
       # Reason 11 (SSH_DISCONNECT_BY_APPLICATION) is expected, and logged at severity level INFO
       if ($Reason != 11) {$DisconnectReceived{$Reason}{$Host}++;}
    } elsif ( my ($Host) = ($ThisLine =~ /^ROOT LOGIN REFUSED FROM ([^ ]*)$/)) {
