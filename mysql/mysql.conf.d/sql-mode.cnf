@@ -1,0 +1,5 @@
+[server]
+# Added 8/11/2016 by FJG to remove "ONLY_FULL_GROUP_BY." The rest of these were configured by default
+# so I have left them be.
+# Maybe fixed in 4.7.28 - See CRM-21362, CRM-21363 and CRM-21364
+sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
