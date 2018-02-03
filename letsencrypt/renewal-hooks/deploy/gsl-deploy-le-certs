@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# 2018-02-03: This script adapted from
+# http://letsencrypt.readthedocs.io/en/latest/using.html#third-party-plugins
+# 
+
+set -e
+
+for domain in $RENEWED_DOMAINS; do
+        case $domain in
+        `hostname --long`)
+                daemon_cert_root=/opt/local/CloudBerry\ Backup/etc/config
+                daemon_cert_file=SSLcertificate.crt
+                daemon_cert_key=SSLprivatekey.key
+
+                # Make sure the certificate and private key files are
+                # never world readable, even just for an instant while
+                # we're copying them into daemon_cert_root.
+                umask 077
+
+                cp "$RENEWED_LINEAGE/fullchain.pem" "$daemon_cert_root/$daemon_cert_file"
+                cp "$RENEWED_LINEAGE/privkey.pem" "$daemon_cert_root/$daemon_cert_key"
+
+                # Apply the proper file ownership and permissions for
+                # the daemon to read its certificate and key.
+                chown root:root "$daemon_cert_root/$daemon_cert_file" \
+                        "$daemon_cert_root/$daemon_cert_key"
+                chmod 400 "$daemon_cert_root/$daemon_cert_file" \
+                        "$daemon_cert_root/$daemon_certkey"
+
+                service cloudberry-backupWA restart >/dev/null
+                ;;
+        esac
+done
