@@ -1,3 +1,4 @@
+[server]
 tmp_table_size		= 24M
 max_heap_table_size	= 24M
 join_buffer_size	= 640K
