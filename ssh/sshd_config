@@ -65,8 +65,12 @@ X11Forwarding yes
 X11DisplayOffset 10
 PrintMotd no
 PrintLastLog yes
-TCPKeepAlive yes
 #UseLogin no
+
+# Keep session alive; null packet every 120 sec; drop session after 1h
+TCPKeepAlive yes
+ClientAliveInterval 120
+ClientAliveCountMax 30
 
 #MaxStartups 10:30:60
 #Banner /etc/issue.net
