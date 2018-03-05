@@ -56,7 +56,7 @@ MDBNAMES="mysql $DBNAMES"
 DBEXCLUDE=""
 
 # Include CREATE DATABASE in backup?
-CREATE_DATABASE=yes
+CREATE_DATABASE=no
 
 # Separate backup directory and file for each DB? (yes or no)
 SEPDIR=yes
@@ -72,7 +72,7 @@ COMMCOMP=no
 
 # Additionally keep a copy of the most recent backup in a seperate
 # directory.
-LATEST=no
+LATEST=yes
 
 #  The maximum size of the buffer for client/server communication. e.g. 16MB
 #  (maximum is 1GB)
