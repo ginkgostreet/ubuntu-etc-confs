@@ -218,7 +218,7 @@ port     = http,https
 logpath  = %(apache_access_log)s
 maxretry = 1
 ignorecommand = %(ignorecommands_dir)s/apache-fakegooglebot <ip>
-enabled  = true
+enabled  = false
 
 #
 # Web Applications
