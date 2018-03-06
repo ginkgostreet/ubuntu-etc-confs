@@ -8,6 +8,8 @@ long_query_time = 8
 # min_examined_row_limit = 1000
 
 # Query logging
+# Be aware that this log type is a performance killer.
+# As of 5.1 you can enable the log at runtime!
 #general_log=1
 #general_log_file=/var/log/mysql/mysql-query-log.log
 
