@@ -1,6 +1,5 @@
 #!/bin/sh
-# To add the GSL logo
+# To add the GSL logo to the login message
 #    1. Install the update-motd package
-#    2. Rename /etc/update-motd.d/00-header to 01-header
-#    3. Install this file as /etc/update-motd.d/00-logo
+#    2. Install this file as /etc/update-motd.d/00-0logo
 [ -f ../gsl-motd-logo.txt ] && cat ../gsl-motd-logo.txt
