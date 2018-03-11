@@ -3,6 +3,7 @@
 
 # What ports, IPs and protocols we listen for
 Port 22
+Port 32121
 # Use these options to restrict which interfaces/protocols sshd will bind to
 #ListenAddress ::
 #ListenAddress 0.0.0.0
@@ -90,3 +91,7 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 # PAM authentication, then enable this but set PasswordAuthentication
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
+
+# Warn users connecting through standard SSH port that it's going away
+Match LocalPort 22
+Banner /etc/ssh/port22-deprecated.txt
