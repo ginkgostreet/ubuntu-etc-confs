@@ -13,7 +13,7 @@
 * Dan O'Brien (dan@ginkgostreet.com)
 
 
-### Configuration Updates ###
+### Required Configuration Updates ###
 
 1.   Increase the OS's open files limit
 2.   MySQL tuning
@@ -22,14 +22,15 @@
      * PHP-FPM
 5.   SSHd
 6.   DKIM signing
+7.   Fail2Ban
 
 ### Optional Changes ###
 
-7.   Restrict phpMyAdmin by IP address
-8.   GSL Logo on login
-9.   Let's Encrypt deployment script
-10.   Logwatch
+1.   Restrict phpMyAdmin by IP address
+2.   GSL Logo on login
+3.   Let's Encrypt deployment script
+4.   Logwatch
 
 ### TODO ###
 
-11.   Logrotate
+1.   Logrotate
