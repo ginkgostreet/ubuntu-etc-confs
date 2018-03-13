@@ -1,0 +1,2 @@
+civicrm._domainkey.changeme.org changeme.org:civicrm:/etc/dkimkeys/civicrm.private
+changeme._domainkey.changeme.ginkgostreet.com changeme.ginkgostreet.com:changeme:/etc/dkimkeys/changeme.private
