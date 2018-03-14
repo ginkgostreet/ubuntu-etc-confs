@@ -3,4 +3,6 @@
 #    1. Install the update-motd package
 #    2. Install this file as /etc/update-motd.d/00-0logo
 #    3. Copy the file ../gsl-motd-logo.txt to /etc
+#    4. Optional: Install fortune-mod (and fortunes, fortunes-bofh-excuses, fortunes-debian-hints, etc)
 [ -f /etc/gsl-motd-logo.txt ] && cat /etc/gsl-motd-logo.txt
+[ -x /usr/games/fortune ] && /usr/games/fortune
