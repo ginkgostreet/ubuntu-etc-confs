@@ -95,3 +95,9 @@ UsePAM yes
 # Warn users connecting through standard SSH port that it's going away
 Match LocalPort 22
 Banner /etc/ssh/port22-deprecated.txt
+
+# Client group gets only sftp access
+Match group client
+  X11Forwarding no
+  AllowTcpForwarding no
+  ForceCommand internal-sftp
