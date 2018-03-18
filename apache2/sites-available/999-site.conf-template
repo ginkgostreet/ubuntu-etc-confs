@@ -1,0 +1,41 @@
+<VirtualHost *:80>
+	ServerName %%SITE%%
+	ServerAlias www.%%SITE%%
+	ServerAdmin support@ginkgostreet.com
+
+	DocumentRoot /var/www/%%SITE%%/htdocs
+
+	<Directory /var/www/%%SITE%%/htdocs>
+		AllowOverride All
+	</Directory>
+
+	<IfModule proxy_fcgi_module>
+		<Proxy fcgi://localhost>
+		  ProxySet timeout=600
+		</Proxy>
+		<FilesMatch ".+\.ph(p[3457]?|t|tml)$">
+#			SetHandler "proxy:unix:/run/php/www56-fpm.sock|fcgi://localhost"
+			SetHandler "proxy:unix:/run/php/www70-fpm.sock|fcgi://localhost"
+		</FilesMatch>
+	</IfModule>
+
+	ErrorLog /var/log/apache2/%%SITE%%/error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel warn
+
+	CustomLog /var/log/apache2/%%SITE%%/access.log combined
+
+<IfModule rewrite_module>
+RewriteEngine on
+RewriteOptions inherit
+# Redirect the non-SSL site to HTTPS - uncomment this stanza when SSL certificate is installed
+# <IfModule ssl_module>
+#   RewriteCond %{SERVER_NAME} =%%SITE%% [OR]
+#   RewriteCond %{SERVER_NAME} =www.%%SITE%%
+#   RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+# </IfModule>
+</IfModule>
+
+</VirtualHost>

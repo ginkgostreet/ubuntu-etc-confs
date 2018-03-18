@@ -1,0 +1,44 @@
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+	# The ServerName directive sets the request scheme, hostname and port that
+	# the server uses to identify itself. This is used when creating
+	# redirection URLs. In the context of virtual hosts, the ServerName
+	# specifies what hostname must appear in the request's Host: header to
+	# match this virtual host. For the default virtual host (this file) this
+	# value is not decisive as it is used as a last resort host regardless.
+	# However, you must set it for any further virtual host explicitly.
+	ServerName %%SITE%%
+	ServerAlias www.%%SITE%%
+	ServerAdmin support@ginkgostreet.com
+	DocumentRoot /var/www/%%SITE%%/htdocs
+
+	<Directory /var/www/%%SITE%%/htdocs>
+		AllowOverride All
+	</Directory>
+
+	<IfModule proxy_fcgi_module>
+		<Proxy fcgi://localhost>
+		  ProxySet timeout=600
+		</Proxy>
+		<FilesMatch ".+\.ph(p[3457]?|t|tml)$">
+#			SetHandler "proxy:unix:/run/php/www56-fpm.sock|fcgi://localhost"
+			SetHandler "proxy:unix:/run/php/www70-fpm.sock|fcgi://localhost"
+		</FilesMatch>
+	</IfModule>
+
+	# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+	# error, crit, alert, emerg.
+	# It is also possible to configure the loglevel for particular
+	# modules, e.g.
+	#LogLevel info ssl:warn
+
+	ErrorLog /var/log/apache2/%%SITE%%/error.log
+	CustomLog /var/log/apache2/%%SITE%%/access.log combined
+
+SSLCertificateFile /etc/letsencrypt/live/%%SITE%%/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/%%SITE%%/privkey.pem
+# SSLCertificateFile /var/www/%%SITE%%/ssl/fullchain.pem
+# SSLCertificateKeyFile /var/www/%%SITE%%/ssl/privkey.pem
+Include /etc/letsencrypt/options-ssl-apache.conf
+</VirtualHost>
+</IfModule>
