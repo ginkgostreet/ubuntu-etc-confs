@@ -1,0 +1,14 @@
+diff --git a/init/mysql.conf b/init/mysql.conf
+index fa7f208..8a6df88 100644
+--- a/init/mysql.conf
++++ b/init/mysql.conf
+@@ -40,6 +40,9 @@ pre-start script
+       echo "ERROR: The partition with $datadir is too full!" | $ERR_LOGGER
+       exit 1
+     fi
++
++    limit nofile 8192
++
+ end script
+ 
+ exec /usr/sbin/mysqld
