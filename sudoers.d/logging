@@ -1,0 +1,4 @@
+# Log most sudo activity. It will appear in /var/log/sudo-io.
+Defaults log_output
+Defaults!/usr/bin/sudoreplay !log_output
+Defaults!/sbin/reboot !log_output

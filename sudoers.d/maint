@@ -1,0 +1,3 @@
+# Let the 'maint' group run the gslperms utility w/o a password
+
+%maint ALL = NOPASSWD: /usr/local/sbin/gslperms
