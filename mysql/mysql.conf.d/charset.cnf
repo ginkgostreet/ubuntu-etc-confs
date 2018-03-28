@@ -1,0 +1,5 @@
+[server]
+# Drupal's preferred charset
+skip-character-set-client-handshake
+character_set_server=utf8mb4
+collation-server=utf8mb4_unicode_ci
