@@ -146,13 +146,14 @@ while (defined($ThisLine = <STDIN>)) {
           ($ThisLine =~ /IMAP.* failed with mbox file/) or
 	  ($ThisLine =~ /discarded duplicate forward to/) or 
 	  ($ThisLine =~ /discarding vacation response/) or
-	  ($ThisLine =~ /discarded vacation reply to/) 
+	  ($ThisLine =~ /discarded vacation reply to/) or
+	  ($ThisLine =~ /imap\(.*\): Logged out.*/) 
 	  )
          { 
          # We don't care about these
      } elsif ( $ThisLine =~ /Killed with signal /) {
          $End++;
-     } elsif ( $ThisLine =~ /Dovecot (v\d[^ ]* |)starting up/) {
+     } elsif ( $ThisLine =~ /Dovecot (v\d[^ ]* |)(\(.+\) )?starting up/) {
          $Restarts++;
          $End = 0;
      } elsif ( ( ($User, $Host) = ( $ThisLine =~ /^pop3-login: Login: (.*?) \[(.*)\]/ ) ) or
